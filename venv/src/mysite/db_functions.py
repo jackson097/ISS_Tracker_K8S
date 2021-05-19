@@ -4,10 +4,18 @@ db_location = "/db-mount/db.sqlite3"
 table = "coords"
 
 
-def create_table():
+def _db_connect():
     # Connect to db
     conn = sqlite3.connect(db_location)
     cursor = conn.cursor()
+
+    # Return connection and cursor objects
+    return conn, cursor
+
+
+def create_table():
+    # Get db connection and cursor objects
+    conn, cursor = _db_connect()
 
     cursor.execute("CREATE TABLE IF NOT EXISTS " + table + " (id INTEGER, latitude DECIMAL, longitude DECIMAL);")
 
@@ -18,9 +26,9 @@ def create_table():
 
 
 def get_coords_from_db():
-    # Connect to db
-    conn = sqlite3.connect(db_location)
-    cursor = conn.cursor()
+    
+    # Get db connection and cursor objects
+    conn, cursor = _db_connect()
 
     # Get latitude and longitude from coords table
     cursor.execute("SELECT COUNT(*) AS RowCnt FROM " + table + ";")
@@ -41,12 +49,12 @@ def get_coords_from_db():
     
 
 def remove_and_replace_coords(latitude, longitude):
-    # Connect to db
-    conn = sqlite3.connect(db_location)
-    cursor = conn.cursor()
+    
+    # Get db connection and cursor objects
+    conn, cursor = _db_connect()
 
     # Check if anything exists in db already, if so, remove
-    cursor.execute("SELECT COUNT(*) AS RowCnt FROM coords;")
+    cursor.execute("SELECT COUNT(*) AS RowCnt FROM " + table + ";")
     if (cursor.fetchone()[0] > 0):
         cursor.execute("DELETE FROM " + table + " WHERE id=1;")
 

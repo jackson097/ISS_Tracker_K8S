@@ -11,6 +11,7 @@ def main(request):
     current_iss_latitude = requests.get(iss_api_url).json()['iss_position']['latitude']
     current_iss_longitude = requests.get(iss_api_url).json()['iss_position']['longitude']
 
+    # Create a coords table if one does not exist
     create_table()
 
     # Get database coordinates
