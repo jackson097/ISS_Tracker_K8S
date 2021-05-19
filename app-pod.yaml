@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: iss-tracker-app
+spec:
+    containers:
+    - name: iss-tracker-app
+      image: jacksonnewlands/iss_tracker_app
+    imagePullSecrets:
+    - name: regcred

@@ -1,0 +1,21 @@
+version: '3'
+services:     
+    db:
+        build:
+            context: db
+            dockerfile: Dockerfile
+        container_name: db
+        tty: true
+        volumes:
+            - ./db:/db-mount
+
+    app:
+        build:
+            context: venv
+            dockerfile: Dockerfile
+        container_name: app
+        tty: true
+        ports:
+            - 8000:8000
+        volumes:
+            - ./db:/db-mount
