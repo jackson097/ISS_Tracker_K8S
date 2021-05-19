@@ -5,9 +5,6 @@ kind: Pod
 metadata:
   name: iss-tracker-pod
 spec:
-    volumes:
-    - name: db-mount
-      emptyDir: {}
     containers:
     - name: iss-tracker-app
       volumeMounts:
@@ -24,3 +21,7 @@ spec:
       image: jacksonnewlands/iss-tracker-db
     imagePullSecrets:
     - name: regcred
+
+    volumes:
+    - name: db-mount
+      emptyDir: {}
