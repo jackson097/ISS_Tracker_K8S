@@ -1,5 +1,3 @@
-# Using this pod for testing both containers inside of single pod
-
 apiVersion: v1
 kind: Pod
 metadata:
@@ -10,7 +8,7 @@ spec:
       volumeMounts:
         - name: db-mount
           mountPath: /db-mount/
-      image: jacksonnewlands/iss-tracker-app
+      image: jacksonnewlands/iss-tracker-app:latest
     imagePullSecrets:
     - name: regcred
   
@@ -18,7 +16,7 @@ spec:
       volumeMounts:
         - name: db-mount
           mountPath: /db-mount/
-      image: jacksonnewlands/iss-tracker-db
+      image: jacksonnewlands/iss-tracker-db:latest
     imagePullSecrets:
     - name: regcred
 

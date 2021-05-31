@@ -1,26 +1,27 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from mysite.db_functions import get_coords_from_db, remove_and_replace_coords, create_table
+from mysite.db_functions import get_coords_from_db, remove_and_replace_coords
 import requests
 
-iss_api_url = "http://api.open-notify.org/iss-now.json"
+ISS_API_URL = "http://api.open-notify.org/iss-now.json"
 
 def main(request):
 
     # API calls to get latitude and longitude
-    current_iss_latitude = requests.get(iss_api_url).json()['iss_position']['latitude']
-    current_iss_longitude = requests.get(iss_api_url).json()['iss_position']['longitude']
+    current_iss_latitude = requests.get(ISS_API_URL).json()['iss_position']['latitude']
+    current_iss_longitude = requests.get(ISS_API_URL).json()['iss_position']['longitude']
 
-    # Create a coords table if one does not exist
-    create_table()
-
-    # Get database coordinates
-    previous_coords = get_coords_from_db()
+    # Get database coordinates and store into string
+    coords = get_coords_from_db()
+    if coords == False:
+        previous_coords = "N/A"
+    else:
+        previous_coords = "(" + str(coords[0]) + ", " + str(coords[1]) + ")"
 
     # Remove and replace old coords from db
     remove_and_replace_coords(current_iss_latitude, current_iss_longitude)
 
-    # Format messages to be displayed
+    # Format current coords string to be displayed
     current_coords = "(" + current_iss_latitude + ", " + current_iss_longitude + ")"
 
     context = {
