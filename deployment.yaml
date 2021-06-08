@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iss-tracker-deployment
+  labels:
+    app: iss-tracker
+spec:
+  replicas: 2 # Laptop too slow with more than 1 - equivilant to doing a Pod definition
+  selector:
+    matchLabels:
+      app: iss-tracker
+  template:
+    metadata:
+      labels:
+        app: iss-tracker
+    spec:
+      containers:
+      - name: iss-tracker-app
+        volumeMounts:
+          - name: db-mount
+            mountPath: /db-mount/
+        image: jacksonnewlands/iss-tracker-app:latest
+      imagePullSecrets:
+      - name: regcred
+    
+      - name: iss-tracker-db
+        volumeMounts:
+          - name: db-mount
+            mountPath: /db-mount/
+        image: jacksonnewlands/iss-tracker-db:latest
+      imagePullSecrets:
+      - name: regcred
+
+      volumes:
+      - name: db-mount
+        emptyDir: {}

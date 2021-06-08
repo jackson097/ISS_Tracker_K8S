@@ -8,8 +8,9 @@ ISS_API_URL = "http://api.open-notify.org/iss-now.json"
 def main(request):
 
     # API calls to get latitude and longitude
-    current_iss_latitude = requests.get(ISS_API_URL).json()['iss_position']['latitude']
-    current_iss_longitude = requests.get(ISS_API_URL).json()['iss_position']['longitude']
+    response_json = requests.get(ISS_API_URL).json()
+    current_iss_latitude = response_json['iss_position']['latitude']
+    current_iss_longitude = response_json['iss_position']['longitude']
 
     # Get database coordinates and store into string
     coords = get_coords_from_db()
