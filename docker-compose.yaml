@@ -1,7 +1,7 @@
 version: '3'
 services:     
     db:
-        image: jacksonnewlands/iss-tracker-db:working
+        image: iss-db:latest
         # build:
         #     context: db
         #     dockerfile: Dockerfile
@@ -11,7 +11,7 @@ services:
             - ./db:/db-mount
 
     app:
-        image: jacksonnewlands/iss-tracker-app:working
+        image: iss-app:latest
         # build:
         #     context: venv
         #     dockerfile: Dockerfile

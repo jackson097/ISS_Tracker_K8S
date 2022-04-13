@@ -5,7 +5,7 @@ metadata:
   labels:
     app: iss-tracker
 spec:
-  replicas: 2 # Laptop too slow with more than 1 - equivilant to doing a Pod definition
+  replicas: 1
   selector:
     matchLabels:
       app: iss-tracker
@@ -19,17 +19,17 @@ spec:
         volumeMounts:
           - name: db-mount
             mountPath: /db-mount/
-        image: jacksonnewlands/iss-tracker-app:latest
-      imagePullSecrets:
-      - name: regcred
+        image: k3d-registry:5000/iss-app:latest
+      # imagePullSecrets:
+      # - name: regcred
     
       - name: iss-tracker-db
         volumeMounts:
           - name: db-mount
             mountPath: /db-mount/
-        image: jacksonnewlands/iss-tracker-db:latest
-      imagePullSecrets:
-      - name: regcred
+        image: k3d-registry:5000/iss-db:latest
+      # imagePullSecrets:
+      # - name: regcred
 
       volumes:
       - name: db-mount
